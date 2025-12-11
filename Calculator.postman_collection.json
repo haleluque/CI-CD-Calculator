@@ -1,0 +1,93 @@
+{
+    "info": {
+        "_postman_id": "c7603410-9124-42b7-883b-184521021200",
+        "name": "Calculator",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Sum",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/sum/10/5",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "sum",
+                        "10",
+                        "5"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Subtract",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/subtract/10/5",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "subtract",
+                        "10",
+                        "5"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Multiply",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/multiply/10/5",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "multiply",
+                        "10",
+                        "5"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Divide",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/divide/10/2",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "divide",
+                        "10",
+                        "2"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
