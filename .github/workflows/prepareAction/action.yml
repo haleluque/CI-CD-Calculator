@@ -1,0 +1,20 @@
+name: "Setup Java and Maven"
+description: "Sets up Java 17 and caches Maven dependencies"
+runs:
+  using: "composite"
+  steps:
+    # Cache Maven dependencies to speed up builds
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    # Set up Java Development Kit (JDK) version 17
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'

@@ -3,6 +3,7 @@
 name: CI
 
 # Trigger workflow on push and pull request events against master branch
+# All jobs have repeteated steps, which are: checkout, prepare environment (re usable action)
 on:
   push:
     branches: [ "master", "main" ]
@@ -14,35 +15,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the repository code
     - uses: actions/checkout@v4
 
-    # Step 2: Cache Maven dependencies to speed up builds
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
+    - name: Prepare Action
+      uses: ./.github/workflows/prepareAction
 
-    # Step 3: Set up Java Development Kit (JDK) version 17
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Step 4: Build the project with Maven (Skip tests here, ran in next job)
+    # Build the project with Maven, skipping tests
     - run: mvn -B package -DskipTests --file pom.xml
 
-    # Step 5: Prepare Artifacts
+    # Prepare Artifacts
     - run: |
         mkdir -p build
         cp target/*.jar build/
 
-    # Step 6: Upload the JAR artifact
+    # Upload the JAR artifact
     - name: Upload Artifact
+    
       uses: actions/upload-artifact@v4
       with:
         name: calculator-app
@@ -52,26 +40,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    # Step 1: Check out the repository code
     - uses: actions/checkout@v4
 
-    # Step 2: Cache Maven dependencies to speed up builds
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
+    - name: Prepare Action
+      uses: ./.github/workflows/prepareAction
 
-    # Step 3: Set up Java Development Kit (JDK) version 17
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Step 4: Run Linting
+    # Run Linting
     - name: Run Linting
       run: mvn checkstyle:check
 
@@ -79,25 +53,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    # Step 1: Check out the repository code
     - uses: actions/checkout@v4
+    
+    - name: Prepare Action
+      uses: ./.github/workflows/prepareAction
 
-    # Step 2: Cache Maven dependencies to speed up builds
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-
-    # Step 3: Set up Java Development Kit (JDK) version 17
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Step 4: Run Tests
+    # Run Tests
     - name: Run Tests
       run: mvn test
