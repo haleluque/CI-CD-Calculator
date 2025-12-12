@@ -10,34 +10,7 @@ on:
     branches: [ "master", "main" ]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    # Step 1: Check out the repository code
-    - uses: actions/checkout@v4
-
-    # Step 2: Cache Maven dependencies to speed up builds
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-
-    # Step 3: Set up Java Development Kit (JDK) version 17
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-
-    # Step 4: Run Linting
-    - name: Run Linting
-      run: mvn checkstyle:check
-
   build:
-    needs: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -74,3 +47,30 @@ jobs:
       with:
         name: calculator-app
         path: build/
+
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    # Step 1: Check out the repository code
+    - uses: actions/checkout@v4
+
+    # Step 2: Cache Maven dependencies to speed up builds
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    # Step 3: Set up Java Development Kit (JDK) version 17
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Step 4: Run Linting
+    - name: Run Linting
+      run: mvn checkstyle:check
