@@ -61,3 +61,25 @@ jobs:
     # Run Tests
     - name: Run Tests
       run: mvn test
+
+  security:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Prepare Action
+      uses: ./.github/workflows/prepareAction
+    
+    # Cache OWASP NVD Data
+    - name: Cache OWASP NVD Data
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository/org/owasp/dependency-check-data
+        key: dependency-check-data-${{ runner.os }}
+        restore-keys: |
+          dependency-check-data-${{ runner.os }}
+
+    # Run Security Check
+    - name: Run Security Check
+      run: mvn org.owasp:dependency-check-maven:check
