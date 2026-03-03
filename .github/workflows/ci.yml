@@ -3,7 +3,7 @@
 name: CI
 
 # Trigger workflow on push and pull request events against master branch
-# All jobs have repeteated steps, which are: checkout, prepare environment (re usable action)
+# All jobs have repeteated steps, which are: prepare environment (re usable action)
 on:
   push:
     branches: [ "master", "main" ]
@@ -68,6 +68,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # Run Trivy vulnerability scanner
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
