@@ -45,7 +45,7 @@ jobs:
     - name: Prepare Action
       uses: ./.github/workflows/prepareAction
 
-    # Run Linting
+    # Run Linting: compliance checkstyle and defined code rules
     - name: Run Linting
       run: mvn checkstyle:check
 
@@ -77,4 +77,5 @@ jobs:
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
+        # It fails for critical and high vulnerabilities
         severity: 'CRITICAL,HIGH'
