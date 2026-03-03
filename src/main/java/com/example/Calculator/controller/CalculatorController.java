@@ -1,7 +1,6 @@
 package com.example.Calculator.controller;
 
 import com.example.Calculator.services.ICalculatorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ public class CalculatorController {
 
     private final ICalculatorService calculatorService;
 
-    @Autowired
     public CalculatorController(ICalculatorService calculatorService) {
         this.calculatorService = calculatorService;
     }
