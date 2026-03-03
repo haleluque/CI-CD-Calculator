@@ -1,0 +1,34 @@
+# Build output
+target/
+
+# Git
+.git
+.gitignore
+
+# IDE and OS
+.idea
+*.iml
+.vscode
+.DS_Store
+Thumbs.db
+
+# Maven local repo (we build inside the image)
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+*~
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*
+
+# Docs and misc (optional, keeps image context small)
+*.md
+.env
+.env.*
